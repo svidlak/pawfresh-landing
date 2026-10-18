@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PawFresh — Paw Cleaning Kit</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700;800&display=swap">
 <style>
+  :root { --gx: 48px; --gap: 56px; --h1: 36px; --h2: 30px; }
+  html, body { overflow-x: hidden; }
+  img, video { max-width: 100%; }
+  @media (max-width: 768px) {
+    :root { --gx: 20px; --gap: 28px; --h1: 28px; --h2: 24px; }
+    .pf-navlinks { display: none !important; }
+  }
   body { margin: 0; background: #F7F2E9; font-family: 'Figtree', sans-serif; color: #2B2420; padding-bottom: 0; }
   a { color: inherit; text-decoration: none; }
   .pf-h { font-family: 'Fraunces', serif; }
@@ -26,7 +34,7 @@
   </div>
 
   <!-- NAV -->
-  <div style="display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; max-width: 1180px; margin: 0 auto; flex-wrap: wrap; gap: 16px;">
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 20px var(--gx); max-width: 1180px; margin: 0 auto; flex-wrap: wrap; gap: 16px;">
     <div style="display: flex; align-items: center; gap: 10px;">
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <ellipse cx="12" cy="15.5" rx="5.2" ry="4.3" fill="#3A6B5C"/>
@@ -37,7 +45,7 @@
       </svg>
       <span class="pf-h" style="font-size: 22px; font-weight: 700;">PawFresh</span>
     </div>
-    <div style="display: flex; align-items: center; gap: 28px; font-size: 15px; font-weight: 500;">
+    <div class="pf-navlinks" style="display: flex; align-items: center; gap: 28px; font-size: 15px; font-weight: 500;">
       <a href="#features">Features</a>
       <a href="#how">How it works</a>
       <a href="#guarantee">Guarantee</a>
@@ -46,7 +54,7 @@
   </div>
 
   <!-- BUY BOX -->
-  <div style="max-width: 1180px; margin: 0 auto; padding: 40px 48px 64px; display: flex; gap: 56px; flex-wrap: wrap;">
+  <div style="max-width: 1180px; margin: 0 auto; padding: 40px var(--gx) 64px; display: flex; gap: var(--gap); flex-wrap: wrap;">
 
     <!-- Gallery -->
     <div style="flex: 1 1 440px; min-width: 280px;">
@@ -68,7 +76,7 @@
     <!-- Buy panel -->
     <div style="flex: 1 1 380px; min-width: 280px;">
       <div style="font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #3A6B5C; margin-bottom: 8px;">PawFresh Classic</div>
-      <h1 class="pf-h" style="font-size: 36px; line-height: 1.15; font-weight: 600; margin: 0 0 14px;">Twist-Clean Paw Washer Kit</h1>
+      <h1 class="pf-h" style="font-size: var(--h1); line-height: 1.15; font-weight: 600; margin: 0 0 14px;">Twist-Clean Paw Washer Kit</h1>
       <p style="font-size: 15px; line-height: 1.6; color: #4A4238; margin: 0 0 20px;">Lifts mud, sand, and grime off your dog's paws in one gentle twist — before it ever touches your floors.</p>
 
       <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
@@ -115,7 +123,7 @@
   </div>
 
   <!-- PROBLEM STRIP -->
-  <div style="background: #FFFFFF; padding: 64px 48px;">
+  <div style="background: #FFFFFF; padding: 64px var(--gx);">
     <div style="max-width: 1100px; margin: 0 auto; display: flex; gap: 36px; flex-wrap: wrap;">
       <div style="flex: 1 1 260px;">
         <div style="font-size: 32px; margin-bottom: 10px;">🐾</div>
@@ -136,8 +144,8 @@
   </div>
 
   <!-- FEATURES -->
-  <div id="features" style="max-width: 1100px; margin: 0 auto; padding: 88px 48px;">
-    <h2 class="pf-h" style="font-size: 36px; font-weight: 600; text-align: center; margin: 0 0 12px;">One twist. Spotless paws.</h2>
+  <div id="features" style="max-width: 1100px; margin: 0 auto; padding: 88px var(--gx);">
+    <h2 class="pf-h" style="font-size: var(--h1); font-weight: 600; text-align: center; margin: 0 0 12px;">One twist. Spotless paws.</h2>
     <p style="text-align: center; color: #6B6354; font-size: 16px; margin: 0 0 56px;">Everything you need, nothing you don't.</p>
     <div style="display: flex; flex-wrap: wrap; gap: 24px;">
       <div style="flex: 1 1 240px; min-width: 240px; background: #FFFFFF; border-radius: 18px; padding: 28px;">
@@ -164,17 +172,17 @@
   </div>
 
   <!-- VIDEO -->
-  <div id="video" style="max-width: 900px; margin: 0 auto; padding: 0 48px 88px;">
-    <h2 class="pf-h" style="font-size: 30px; font-weight: 600; text-align: center; margin: 0 0 32px;">See it in action</h2>
+  <div id="video" style="max-width: 900px; margin: 0 auto; padding: 0 var(--gx) 88px;">
+    <h2 class="pf-h" style="font-size: var(--h2); font-weight: 600; text-align: center; margin: 0 0 32px;">See it in action</h2>
     <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; background: #2B2420; border-radius: 20px; overflow: hidden;">
       <video src="assets/video.mp4" poster="assets/variants/green-medium.jpeg" controls playsinline style="width: 100%; height: 100%; object-fit: cover; display: block;"></video>
     </div>
   </div>
 
   <!-- HOW IT WORKS -->
-  <div id="how" style="background: #2B2420; padding: 88px 48px;">
+  <div id="how" style="background: #2B2420; padding: 88px var(--gx);">
     <div style="max-width: 1000px; margin: 0 auto;">
-      <h2 class="pf-h" style="color: #F7F2E9; font-size: 36px; font-weight: 600; text-align: center; margin: 0 0 56px;">How it works</h2>
+      <h2 class="pf-h" style="color: #F7F2E9; font-size: var(--h1); font-weight: 600; text-align: center; margin: 0 0 56px;">How it works</h2>
       <div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: center;">
         <div style="flex: 1 1 220px; max-width: 280px; text-align: center;">
           <div class="pf-h" style="width: 52px; height: 52px; border-radius: 50%; background: #E8754A; color: #fff; font-size: 20px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;">1</div>
@@ -196,13 +204,13 @@
   </div>
 
   <!-- MID CTA -->
-  <div style="background: #FFFFFF; padding: 40px 48px; text-align: center; border-bottom: 1px solid #EEE6D6;">
+  <div style="background: #FFFFFF; padding: 40px var(--gx); text-align: center; border-bottom: 1px solid #EEE6D6;">
     <p class="pf-h" style="font-size: 20px; font-weight: 600; margin: 0 0 16px;">Still deciding? $24.99 gets you cleaner floors by tonight.</p>
     <a href="#" style="display: inline-block; background: #E8754A; color: #fff; padding: 13px 28px; border-radius: 999px; font-weight: 700; font-size: 15px;">Get My Paw Cleaner</a>
   </div>
 
   <!-- GUARANTEE / TRUST -->
-  <div id="guarantee" style="max-width: 1100px; margin: 0 auto; padding: 72px 48px; text-align: center;">
+  <div id="guarantee" style="max-width: 1100px; margin: 0 auto; padding: 72px var(--gx); text-align: center;">
     <div style="display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; margin-bottom: 40px;">
       <div style="display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px;">
         <span style="font-size: 20px;">🚚</span> Free worldwide shipping
@@ -224,8 +232,8 @@
   </div>
 
   <!-- FAQ -->
-  <div style="max-width: 760px; margin: 0 auto; padding: 24px 48px 88px;">
-    <h2 class="pf-h" style="font-size: 30px; font-weight: 600; text-align: center; margin: 0 0 40px;">Common questions</h2>
+  <div style="max-width: 760px; margin: 0 auto; padding: 24px var(--gx) 88px;">
+    <h2 class="pf-h" style="font-size: var(--h2); font-weight: 600; text-align: center; margin: 0 0 40px;">Common questions</h2>
     <div style="display: flex; flex-direction: column; gap: 24px;">
       <div>
         <h3 style="font-size: 16px; font-weight: 700; margin: 0 0 6px;">How long does shipping take?</h3>
@@ -247,14 +255,14 @@
   </div>
 
   <!-- FINAL CTA -->
-  <div style="background: #3A6B5C; padding: 72px 48px; text-align: center;">
+  <div style="background: #3A6B5C; padding: 72px var(--gx); text-align: center;">
     <h2 class="pf-h" style="color: #fff; font-size: 34px; font-weight: 600; margin: 0 0 14px;">Ready for cleaner floors?</h2>
     <p style="color: #fff; opacity: 0.85; font-size: 16px; margin: 0 0 32px;">Join the walk-in-without-worry club.</p>
     <a href="#" style="display: inline-block; background: #fff; color: #3A6B5C; padding: 17px 36px; border-radius: 999px; font-weight: 800; font-size: 17px;">Get My Paw Cleaner — $24.99</a>
   </div>
 
   <!-- FOOTER -->
-  <div style="padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; max-width: 1180px; margin: 0 auto;">
+  <div style="padding: 40px var(--gx); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; max-width: 1180px; margin: 0 auto;">
     <div class="pf-h" style="font-size: 16px; font-weight: 700;">PawFresh</div>
     <div style="display: flex; gap: 24px; font-size: 13px; color: #6B6354; flex-wrap: wrap;">
       <a href="#">Contact</a>
