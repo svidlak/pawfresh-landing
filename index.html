@@ -288,14 +288,6 @@
   </div>
 
 </div>
-  <!-- EXPRESS CHECKOUT MODAL (Paddle express variant must be inline) -->
-  <div id="pf-co" role="dialog" aria-modal="true" aria-label="Checkout" style="display: none; position: fixed; inset: 0; z-index: 70; background: rgba(43,36,32,0.55); align-items: center; justify-content: center; padding: 16px;">
-    <div style="position: relative; background: #fff; border-radius: 20px; width: 100%; max-width: 440px; max-height: 100%; overflow-y: auto; padding: 36px 16px 16px;">
-      <button type="button" id="pf-co-close" aria-label="Close checkout" style="position: absolute; top: 6px; right: 12px; background: none; border: 0; font-size: 28px; line-height: 1; cursor: pointer; color: #6B6354;">×</button>
-      <div class="pf-checkout-frame"></div>
-    </div>
-  </div>
-
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 <script>
 (function () {
@@ -330,15 +322,9 @@
   var UNIT = 24.99;
   var state = { color: 'green', size: 'medium', view: 'video', qty: 1 };
   var paddleReady = false;
-  var co = document.getElementById('pf-co');
-  function hideCheckout() { co.style.display = 'none'; document.body.style.overflow = ''; }
-  function showCheckout() { co.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
   if (window.Paddle) {
     Paddle.Environment.set('sandbox');
-    Paddle.Initialize({
-      token: 'test_236f54bc89b1d616f06720798c5',
-      eventCallback: function (ev) { if (ev.name === 'checkout.closed') hideCheckout(); }
-    });
+    Paddle.Initialize({ token: 'test_236f54bc89b1d616f06720798c5' });
     paddleReady = true;
   }
   var names = { orange: 'Orange', blue: 'Blue', green: 'Green' };
@@ -391,26 +377,20 @@
     b.addEventListener('click', function (e) {
       e.preventDefault();
       if (!paddleReady) { console.error('Paddle.js not loaded (serve over http://localhost, not file://)'); return; }
-      showCheckout();
       Paddle.Checkout.open({
         items: [{ priceId: PRICES[state.color + '-' + state.size], quantity: state.qty }],
         settings: {
-          displayMode: 'inline',
-          variant: 'express',
+          displayMode: 'overlay',
+          variant: 'one-page',
           theme: 'light',
           allowQuantity: true,
-          frameTarget: 'pf-checkout-frame',
-          frameInitialHeight: 450,
-          frameStyle: 'width: 100%; min-width: 312px; background-color: transparent; border: none;'
+          showAddDiscounts: false,
+          showAddTaxId: false,
+          allowLogout: false
         }
       });
     });
   });
-  document.getElementById('pf-co-close').addEventListener('click', function () {
-    if (paddleReady) Paddle.Checkout.close();
-    hideCheckout();
-  });
-  co.addEventListener('click', function (e) { if (e.target === co) { if (paddleReady) Paddle.Checkout.close(); hideCheckout(); } });
   render();
 })();
 </script>
