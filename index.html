@@ -379,7 +379,15 @@
       if (!paddleReady) { console.error('Paddle.js not loaded (serve over http://localhost, not file://)'); return; }
       Paddle.Checkout.open({
         items: [{ priceId: PRICES[state.color + '-' + state.size], quantity: state.qty }],
-        settings: { displayMode: 'overlay', theme: 'light', variant: 'one-page' }
+        settings: {
+          displayMode: 'overlay',
+          theme: 'light',
+          variant: 'one-page',
+          allowQuantity: false,
+          showAddDiscounts: false,
+          showAddTaxId: false,
+          allowLogout: false
+        }
       });
     });
   });
