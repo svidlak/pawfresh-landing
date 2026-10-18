@@ -7,7 +7,22 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700;800&display=swap">
 <style>
   :root { --gx: 48px; --gap: 56px; --h1: 36px; --h2: 30px; }
+  html { scroll-behavior: smooth; scrollbar-gutter: stable; -webkit-text-size-adjust: 100%; }
   html, body { overflow-x: hidden; }
+  [id] { scroll-margin-top: 24px; }
+  a, button { transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, opacity .18s ease; -webkit-tap-highlight-color: transparent; }
+  a[href="#"]:hover, .pf-buy:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(232,117,74,0.35); }
+  a:active, button:active { transform: scale(0.97); }
+  .pf-color:hover, .pf-size:hover, .pf-thumb:hover, #pf-video-thumb:hover { transform: translateY(-2px); }
+  a:focus-visible, button:focus-visible { outline: 3px solid #3A6B5C; outline-offset: 3px; }
+  #pf-main, #pf-video { transition: opacity .25s ease; }
+  .js .pf-reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); will-change: opacity, transform; }
+  .js .pf-reveal.pf-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+    .js .pf-reveal { opacity: 1; transform: none; }
+  }
   img, video { max-width: 100%; }
   @media (max-width: 768px) {
     :root { --gx: 20px; --gap: 28px; --h1: 28px; --h2: 24px; }
@@ -274,6 +289,22 @@
 
 </div>
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+(function () {
+  // Scroll-reveal for sections below the buy box (progressive: content stays visible without JS)
+  var wrap = document.body.querySelector(':scope > div');
+  var secs = wrap ? Array.prototype.slice.call(wrap.children, 3) : [];
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('js');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('pf-in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    secs.forEach(function (el) { el.classList.add('pf-reveal'); io.observe(el); });
+  }
+})();
+</script>
 <script>
 (function () {
   // Paddle SANDBOX catalog: one product + one $24.99 price per color/size variant
