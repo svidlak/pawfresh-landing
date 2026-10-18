@@ -51,7 +51,6 @@
       <a href="#guarantee">Guarantee</a>
     </div>
     <a href="#" class="pf-buy" style="background: #E8754A; color: #fff; padding: 11px 22px; border-radius: 999px; font-weight: 700; font-size: 14px;">Get Yours — $24.99</a>
-    <button type="button" id="pf-cart-btn" aria-label="Open cart" style="position: relative; background: #fff; border: 1px solid #E5DCC9; border-radius: 999px; padding: 9px 16px; font: 700 14px 'Figtree', sans-serif; color: #2B2420; cursor: pointer;">Cart <span id="pf-cart-count" style="display: inline-block; min-width: 20px; padding: 1px 6px; margin-left: 4px; border-radius: 999px; background: #3A6B5C; color: #fff; font-size: 12px; text-align: center;">0</span></button>
   </div>
 
   <!-- BUY BOX -->
@@ -274,21 +273,6 @@
   </div>
 
 </div>
-  <!-- CART DRAWER -->
-  <div id="pf-overlay" style="display: none; position: fixed; inset: 0; background: rgba(43,36,32,0.5); z-index: 60;"></div>
-  <aside id="pf-drawer" aria-label="Shopping cart" style="position: fixed; top: 0; right: 0; bottom: 0; width: 400px; max-width: 100%; background: #fff; z-index: 61; transform: translateX(100%); transition: transform .25s ease; display: flex; flex-direction: column; box-shadow: -8px 0 32px rgba(0,0,0,0.15);">
-    <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid #E5DCC9;">
-      <span class="pf-h" style="font-size: 20px; font-weight: 700;">Your cart</span>
-      <button type="button" id="pf-cart-close" aria-label="Close cart" style="background: none; border: 0; font-size: 26px; line-height: 1; cursor: pointer; color: #6B6354;">×</button>
-    </div>
-    <div id="pf-cart-items" style="flex: 1; overflow-y: auto; padding: 8px 20px;"></div>
-    <div style="padding: 16px 20px calc(16px + env(safe-area-inset-bottom)); border-top: 1px solid #E5DCC9;">
-      <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 4px;"><span>Subtotal</span><span id="pf-cart-total">$0.00</span></div>
-      <div style="font-size: 12px; color: #6B6354; margin-bottom: 12px;">Free shipping. Taxes calculated at checkout.</div>
-      <button type="button" id="pf-checkout" style="width: 100%; background: #E8754A; color: #fff; border: 0; border-radius: 12px; padding: 16px; font: 700 16px 'Figtree', sans-serif; cursor: pointer;">Checkout</button>
-    </div>
-  </aside>
-
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 <script>
 (function () {
@@ -358,76 +342,16 @@
   document.getElementById('pf-qty-plus').addEventListener('click', function () {
     state.qty = Math.min(10, state.qty + 1); render();
   });
-  // ---- Cart (kept in localStorage; Paddle only sees it at checkout) ----
-  var cart = {};
-  try { cart = JSON.parse(localStorage.getItem('pf-cart') || '{}') || {}; } catch (e) {}
-  Object.keys(cart).forEach(function (k) { if (!PRICES[k] || !(cart[k] > 0)) delete cart[k]; });
-  var cap = function (t) { return t.charAt(0).toUpperCase() + t.slice(1); };
-  var drawer = document.getElementById('pf-drawer');
-  var overlay = document.getElementById('pf-overlay');
-  function saveCart() { try { localStorage.setItem('pf-cart', JSON.stringify(cart)); } catch (e) {} }
-  function openCart(open) {
-    drawer.style.transform = open ? 'translateX(0)' : 'translateX(100%)';
-    overlay.style.display = open ? 'block' : 'none';
-  }
-  function renderCart() {
-    var keys = Object.keys(cart), count = 0, total = 0;
-    var box = document.getElementById('pf-cart-items');
-    box.innerHTML = '';
-    if (!keys.length) {
-      box.innerHTML = '<p style="color:#6B6354;text-align:center;margin-top:40px;">Your cart is empty.</p>';
-    }
-    keys.forEach(function (k) {
-      var parts = k.split('-'), qty = cart[k];
-      count += qty; total += qty * UNIT;
-      var row = document.createElement('div');
-      row.style.cssText = 'display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #EEE6D6;';
-      row.innerHTML =
-        '<img src="assets/variants/' + k + '.jpeg" alt="" style="width:64px;height:64px;border-radius:10px;object-fit:cover;flex:none;">' +
-        '<div style="flex:1;min-width:0;"><div style="font-weight:700;font-size:14px;">PawFresh Paw Washer</div>' +
-        '<div style="font-size:13px;color:#6B6354;margin-bottom:6px;">' + cap(parts[0]) + ' / ' + cap(parts[1]) + ' · $' + UNIT.toFixed(2) + '</div>' +
-        '<div style="display:inline-flex;align-items:center;border:1px solid #E5DCC9;border-radius:8px;overflow:hidden;">' +
-        '<button type="button" data-act="dec" style="width:30px;height:28px;background:none;border:0;cursor:pointer;">−</button>' +
-        '<span style="width:30px;text-align:center;font-size:13px;font-weight:600;">' + qty + '</span>' +
-        '<button type="button" data-act="inc" style="width:30px;height:28px;background:none;border:0;cursor:pointer;">+</button></div></div>' +
-        '<button type="button" data-act="rm" aria-label="Remove" style="background:none;border:0;color:#9A9183;cursor:pointer;font-size:13px;text-decoration:underline;">Remove</button>';
-      row.addEventListener('click', function (e) {
-        var act = e.target.dataset && e.target.dataset.act;
-        if (!act) return;
-        if (act === 'inc') cart[k] = Math.min(10, cart[k] + 1);
-        if (act === 'dec') cart[k] = cart[k] - 1;
-        if (act === 'rm' || cart[k] < 1) delete cart[k];
-        saveCart(); renderCart();
-      });
-      box.appendChild(row);
-    });
-    document.getElementById('pf-cart-count').textContent = count;
-    document.getElementById('pf-cart-total').textContent = '$' + total.toFixed(2);
-    document.getElementById('pf-checkout').disabled = !count;
-    document.getElementById('pf-checkout').style.opacity = count ? '1' : '0.5';
-  }
-  function addCurrent() {
-    var k = state.color + '-' + state.size;
-    cart[k] = Math.min(10, (cart[k] || 0) + state.qty);
-    saveCart(); renderCart(); openCart(true);
-  }
   document.querySelectorAll('.pf-buy').forEach(function (b) {
-    b.addEventListener('click', function (e) { e.preventDefault(); addCurrent(); });
-  });
-  document.getElementById('pf-cart-btn').addEventListener('click', function () { openCart(true); });
-  document.getElementById('pf-cart-close').addEventListener('click', function () { openCart(false); });
-  overlay.addEventListener('click', function () { openCart(false); });
-  document.getElementById('pf-checkout').addEventListener('click', function () {
-    var items = Object.keys(cart).map(function (k) { return { priceId: PRICES[k], quantity: cart[k] }; });
-    if (!items.length) return;
-    if (!paddleReady) { console.error('Paddle.js not loaded'); return; }
-    openCart(false);
-    Paddle.Checkout.open({
-      items: items,
-      settings: { displayMode: 'overlay', theme: 'light', variant: 'multi-page' }
+    b.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!paddleReady) { console.error('Paddle.js not loaded (serve over http://localhost, not file://)'); return; }
+      Paddle.Checkout.open({
+        items: [{ priceId: PRICES[state.color + '-' + state.size], quantity: state.qty }],
+        settings: { displayMode: 'overlay', theme: 'light', variant: 'one-page' }
+      });
     });
   });
-  renderCart();
   render();
 })();
 </script>
