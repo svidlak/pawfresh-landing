@@ -95,6 +95,14 @@
     <span>Free shipping · 30-day guarantee</span>
   </div>
 </footer>
+<!-- Paddle.js on the root so it can serve as the default payment link page -->
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+  if (window.Paddle) {
+    Paddle.Environment.set('sandbox');
+    Paddle.Initialize({ token: 'test_236f54bc89b1d616f06720798c5' });
+  }
+</script>
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>
